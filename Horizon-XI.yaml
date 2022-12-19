@@ -1,0 +1,69 @@
+name: Horizon-XI
+game_slug: horizon-xi
+version: 1.1.0
+slug: horizon-xi
+runner: wine
+year: 2020
+user: ex1L3
+description: Base Lutris script for downloading and installing HorizonXI Launcher.
+
+script:
+  variables:
+    HOR_PATH: drive_c/Program Files (x86)/HorizonXI
+    POL_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/PlayOnlineViewer
+    FFXI_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/FINAL FANTASY XI
+  files:
+  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.1.0/HorizonXI-Launcher-1.0.1.Setup.exe
+  - dgvoodoo: https://github.com/dege-diosg/dgVoodoo2/releases/download/v2.79.3/dgVoodoo2_79_3.zip
+  game:
+    exe: $HOR_PATH/HorizonXI-Launcher-1.0.1.Setup.exe
+    arch: auto
+    prefix: $GAMEDIR
+    # launch_configs:
+    # - exe: $GAMEDIR/$POL_PATH/pol.exe
+    #   name: PlayOnline
+    # - exe: $GAMEDIR/$POL_PATH/polcfg/polcfg.exe
+    #   name: PlayOnline Configuration
+    # - exe: $GAMEDIR/$FFXI_PATH/ToolsUS/FINAL FANTASY XI Config.exe
+    #   name: FINAL FANTASY XI Online Configuration
+  installer:
+  - task:
+      app: dotnet48
+      description: "Winetricks: Installing dotnet48"
+      name: winetricks
+  - task:
+      app: gdiplus
+      description: "Winetricks: Installing gdiplus"
+      name: winetricks
+  - task:
+      app: corefonts meiryo fontsmooth=rgb
+      description: "Winetricks: Installing core fonts and configuring font smoothing"
+      name: winetricks
+  - copy:
+      description: Installing HorizonXI Launcher
+      dst: $GAMEDIR/$HOR_PATH
+      src: $horizon_launcher
+  - task:
+      app: d3dcompiler_43 d3dcompiler_47
+      description: Installing d3dcompiler
+      name: winetricks
+  - extract:
+      description: Extracting dgVoodoo2
+      dst: $CACHE/dgVoodoo
+      file: dgvoodoo
+  - copy:
+      description: Installing dgVoodoo2
+      dst: $GAMEDIR/$POL_PATH
+      src: $CACHE/dgVoodoo/MS/x86/D3D8.dll
+  - write_config:
+      data:
+        DirectX:
+          VRAM: 4096
+          dgVoodooWatermark: false
+      description: Configuring dgVoodoo2
+      file: $GAMEDIR/$POL_PATH/dgVoodoo.conf
+  wine:
+    dxvk: true
+    esync: true
+    overrides:
+      d3d8: n,b
