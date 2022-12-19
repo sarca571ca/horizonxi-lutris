@@ -1,7 +1,7 @@
-name: Horizon-XI
-game_slug: horizon-xi
+name: Horizon-XI-2
+game_slug: horizon-xi-2
 version: 1.1.0
-slug: horizon-xi
+slug: horizon-xi-2
 runner: wine
 year: 2020
 user: ex1L3
@@ -12,20 +12,14 @@ script:
     HOR_PATH: drive_c/Program Files (x86)/HorizonXI
     POL_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/PlayOnlineViewer
     FFXI_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/FINAL FANTASY XI
+    APP_DATA: drive_c/users
   files:
-  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.0.1/HorizonXI-Launcher-1.0.1.Setup.exe
+  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.1.0/HorizonXI-Launcher-1.1.0.Setup.exe
   - dgvoodoo: https://github.com/dege-diosg/dgVoodoo2/releases/download/v2.79.3/dgVoodoo2_79_3.zip
   game:
-    exe: $HOR_PATH/HorizonXI-Launcher-1.0.1.Setup.exe
+    exe: $HOR_PATH/HorizonXI-Launcher-1.1.0.Setup.exe
     arch: auto
     prefix: $GAMEDIR
-    # launch_configs:
-    # - exe: $GAMEDIR/$POL_PATH/pol.exe
-    #   name: PlayOnline
-    # - exe: $GAMEDIR/$POL_PATH/polcfg/polcfg.exe
-    #   name: PlayOnline Configuration
-    # - exe: $GAMEDIR/$FFXI_PATH/ToolsUS/FINAL FANTASY XI Config.exe
-    #   name: FINAL FANTASY XI Online Configuration
   installer:
   - task:
       app: dotnet48
@@ -62,6 +56,16 @@ script:
           dgVoodooWatermark: false
       description: Configuring dgVoodoo2
       file: $GAMEDIR/$POL_PATH/dgVoodoo.conf
+  - write_json:
+      file: $APP_DATA/$USER/AppData/Roaming/HorizonXI-Launcher/config.json
+      data:
+        paths:
+          installPath:
+            description: 'Location of HorizonXI zip download.'
+            path: 'C:\Program Files (x86)\HorizonXI\Game'
+          downloadPath:
+            description: 'Location of HorizonXI zip download.'
+            path: 'C:\Program Files (x86)\HorizonXI\Downloads'
   wine:
     dxvk: false
     esync: false
