@@ -13,7 +13,7 @@ script:
     POL_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/PlayOnlineViewer
     FFXI_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/FINAL FANTASY XI
   files:
-  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.1.0/HorizonXI-Launcher-1.0.1.Setup.exe
+  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.0.1/HorizonXI-Launcher-1.0.1.Setup.exe
   - dgvoodoo: https://github.com/dege-diosg/dgVoodoo2/releases/download/v2.79.3/dgVoodoo2_79_3.zip
   game:
     exe: $HOR_PATH/HorizonXI-Launcher-1.0.1.Setup.exe
@@ -63,7 +63,8 @@ script:
       description: Configuring dgVoodoo2
       file: $GAMEDIR/$POL_PATH/dgVoodoo.conf
   wine:
-    dxvk: true
-    esync: true
+    dxvk: false
+    esync: false
+    fsync: true
     overrides:
       d3d8: n,b
