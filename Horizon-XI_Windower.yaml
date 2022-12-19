@@ -1,0 +1,202 @@
+name: Horizon-XI - Windower
+game_slug: horizon-xi
+version: 1.1.0
+slug: horizon-xi-windower
+runner: wine
+year: 2020
+user: ex1L3
+description: Base Lutris script for downloading and installing Windower 4 for HorizonXI Private Server.
+
+script:
+  variables:
+    HOR_PATH: drive_c/Program Files (x86)/HorizonXI
+    WIND_PATH: drive_c/Windower
+    ADDONS: drive_c/Windower/addons
+    PLUGINS: drive_c/Windower/plugins
+    DATA: drive_c/Windower/addons/XIPivot/data
+  files:
+    - windower: https://update.windower.net/live/Windower.exe
+    - xipivot: https://github.com/Shirk/XIPivot/releases/download/v0.4.7/XIPivot_Windower_v0.4.7.zip
+  game:
+    exe: $WIND_PATH/Windower.exe
+    arch: auto
+    prefix: $GAMEDIR
+  installer:
+    - copy:
+        description: Installing Windower 4
+        dst: $WIND_PATH
+        src: windower
+    - task:
+        args: -s
+        description: Running Windower 4 for the first time. Allow it to run its install then close to continue.
+        executable: $GAMEDIR/$WIND_PATH/Windower.exe
+        name: wineexec
+    - write_file:
+        description: Writing Windower Config file!
+        mode: w
+        file: $GAMEDIR/$WIND_PATH/settings.xml
+        content: > 
+          <?xml version="1.0" encoding="utf-8"?>
+          <settings>
+            <autoload>
+              <addon>linuxfix</addon>
+              <addon>TParty</addon>
+              <addon>update</addon>
+              <addon>battlemod</addon>
+              <addon>FastCS</addon>
+              <plugin>Config</plugin>
+              <plugin>DelayMeNot</plugin>
+            </autoload>
+            <profile name="Horizon-XI">
+              <consolekey>Insert</consolekey>
+              <uiscale>1</uiscale>
+              <args>--server horizonxi.com --user UserNameHere --password PasswordHere</args>
+              <executable>horizon-loader.exe</executable>
+            </profile>
+          </settings>
+    - task:
+        description: Replace UserNameHere and PasswordHere with your HorizonXI username and password.
+        executable: notepad.exe 
+        args: $GAMEDIR/$WIND_PATH/settings.xml
+        name: wineexec
+    - extract:
+        file: xipivot
+        dst: $ADDONS/XIPivot
+    - copy:
+        description: Copying DATs for Horizon-Music, AshenbubsHD, and XIView.
+        dst: $DATA/DATs
+        src: $HOR_PATH/Game/polplugins/DATs
+    - write_file:
+        description: Writing XIPivot configuration file!
+        mode: w
+        file: $DATA/settings.xml
+        content: >
+          <?xml version="1.1" ?>
+          <settings>
+            <global>
+              <cache_enabled>false</cache_enabled>
+              <cache_max_age>600</cache_max_age>
+              <cache_size>2147483648</cache_size>
+              <debug_log>false</debug_log>
+              <overlays>horizonmusic,ashenbubsHD,xiview</overlays>
+            </global>
+          </settings>
+    - write_file:
+        description: >
+          Writing init.txt file for Windower 4.
+
+          Location: $WIND_PATH/scripts/init.txt
+
+          It will open after write incase you want to make changes.
+        mode: w
+        file: $WIND_PATH/scripts/init.txt
+        content: >
+            keyboard_allowmmf 1
+
+            
+            //Set console variables
+            
+            console_position 15 50
+        
+            console_color 255 255 0 0
+
+            console_displayactivity 1
+
+            console_fadedelay 3500
+
+            console_chatopen 1
+
+            console_screendir screenshots
+
+            
+            //Set game variables
+
+            game_allowsetcursorpos 0
+
+            game_exittype 1
+
+            game_exitprompt 1
+
+            game_allowresize 0
+
+            
+            //Set general variables
+            
+            //showfps 1
+            
+            // FPS Position - Use -75 1 to position it on the top right corner.
+
+            fps_position 20 20 //top left
+
+            //fps_position -75 1 //top right
+
+            drawdistance set 10
+
+            
+            //Bind keys
+            
+            //Bind syntax is "bind <key> <up> <command>
+            
+            // ^ represents control- and ! is alt, eg !1 is alt-1
+
+            bind !f10 drawdistance set 10
+            
+            bind ^f10 drawdistance set 1
+            
+            bind %end game_forceambientlight
+            
+            bind sysrq screenshot png hide
+            
+            bind ^v paste
+            
+            echo Toggle Lighting = End (Bump mapping must be off to work properly)
+            
+            echo Toggle FPS = F12
+            
+            echo DrawDistance Lv 10: Alt-F10
+            
+            echo DrawDistance Lv 1: Ctrl-F10
+            
+            echo Paste Clipboard = Ctrl-V
+
+            
+            // Addons to load when game loads
+            
+            lua load XIPivot
+            
+            
+            // Inserting a wait here to delay loads of problematic addons like GearInfo
+            
+            wait 30
+            
+            
+            // Late Load Addons
+
+            
+            // Set FPS to 60, This should be the last thing.
+            
+            config FrameRateDivisor 1
+    - task:
+        description: >
+            Make any adjustments you like. If you don't know what you're doing then just close notepad.
+          
+            File Location: $WIND_PATH/scripts/init.txt
+        executable: notepad.exe 
+        args: $GAMEDIR/$WIND_PATH/scripts/init.txt
+        name: wineexec 
+    - task:
+        args: -s
+        description: Setting up REGEDITS.
+        executable: $GAMEDIR/$HOR_PATH/Game/DONTTOUCH_Registry.exe
+        name: wineexec
+  requires: horizon-xi
+  wine:
+    dxvk: false
+    esync: false
+    fsync: false
+    eac: false
+    battleeye: false
+    fsr: false
+    vkd3d: false
+    overrides:
+      d3d8: n,b

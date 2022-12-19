@@ -65,6 +65,10 @@ script:
   wine:
     dxvk: false
     esync: false
-    fsync: true
+    fsync: false
+    eac: false
+    battleeye: false
+    fsr: false
+    vkd3d: false
     overrides:
       d3d8: n,b
