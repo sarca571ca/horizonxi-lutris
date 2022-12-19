@@ -63,6 +63,10 @@ script:
         file: xipivot
         dst: $ADDONS/XIPivot
     - copy:
+        description: Copying horizon-loader.exe.
+        dst: $WIND_PATH
+        src: $HOR_PATH/Game/bootloader/horizon-loader.exe
+    - copy:
         description: Copying DATs for Horizon-Music, AshenbubsHD, and XIView.
         dst: $DATA/DATs
         src: $HOR_PATH/Game/polplugins/DATs
