@@ -21,7 +21,7 @@ need **WINE-STAGING-7.22!**
           1024 - 1gb
          
 #### Installation
-1. Doanload the Horizon-XI.yaml from the repo.
+1. Download the Horizon-XI.yaml from the repo.
 2. Open Lutris hit the (+)plus in the top left.
 3. Select install from YAML file
 4. Navigate to the .yaml file you downloaded
@@ -57,8 +57,9 @@ Note: ***The above requirements are critical, if you @me in the discord
     - UserNameHere - replace with your username
     - PasswordHere - replace with your password
     Completed entry should look like this: 
-    <args>--server horizonxi.com --user UserNameHere --password PasswordHere</args>
-    <args>--server horizonxi.com --user ffxibadass --password reallygoodpassword</args>
+    ```<args>--server horizonxi.com --user UserNameHere --password PasswordHere</args>
+    <args>--server horizonxi.com --user ffxibadass --password reallygoodpassword</args>```
+    
     Note: This file is stored locally on your PC, I can't get access to it. If you're
           not comfortable please don't use this script.
 8. Save and close the notepad.
