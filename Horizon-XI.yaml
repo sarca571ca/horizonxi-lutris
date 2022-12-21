@@ -15,7 +15,6 @@ script:
     APP_DATA: drive_c/users
   files:
   - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.1.0/HorizonXI-Launcher-1.1.0.Setup.exe
-  - dgvoodoo: https://github.com/dege-diosg/dgVoodoo2/releases/download/v2.79.3/dgVoodoo2_79_3.zip
   - 4gb_patch: https://drive.google.com/uc?export=download&id=1MKuPC6iI3s6vuoi1jEsgO2z7Kanf9OKE 
   game:
     exe: $HOR_PATH/HorizonXI-Launcher-1.1.0.Setup.exe
@@ -48,14 +47,6 @@ script:
       app: d3dcompiler_43 d3dcompiler_47
       description: Installing d3dcompiler
       name: winetricks
-  - extract:
-      description: Extracting dgVoodoo2
-      dst: $CACHE/dgVoodoo
-      file: dgvoodoo
-  - copy:
-      description: Installing dgVoodoo2
-      dst: $GAMEDIR/$POL_PATH
-      src: $CACHE/dgVoodoo/MS/x86/D3D8.dll
   - extract:
       description: Extracting 4gb_patch
       dst: $GAMEDIR/$HOR_PATH/4gb_patch
