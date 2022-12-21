@@ -1,7 +1,7 @@
-name: Horizon-XI-2
-game_slug: horizon-xi-2
+name: Horizon-XI
+game_slug: horizon-xi
 version: 1.1.0
-slug: horizon-xi-2
+slug: horizon-xi
 runner: wine
 year: 2020
 user: ex1L3
@@ -16,10 +16,17 @@ script:
   files:
   - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.1.0/HorizonXI-Launcher-1.1.0.Setup.exe
   - dgvoodoo: https://github.com/dege-diosg/dgVoodoo2/releases/download/v2.79.3/dgVoodoo2_79_3.zip
+  - 4gb_patch: https://drive.google.com/uc?export=download&id=1MKuPC6iI3s6vuoi1jEsgO2z7Kanf9OKE 
   game:
     exe: $HOR_PATH/HorizonXI-Launcher-1.1.0.Setup.exe
     arch: auto
     prefix: $GAMEDIR
+    launch_configs:
+      - exe: $GAMEDIR/$HOR_PATH/4gb_patch/LargeAddressAwarePatcher.exe
+        name: >
+          4GB Patch
+
+          Only install after HorizonXI is installed!
   installer:
   - task:
       app: dotnet48
@@ -30,13 +37,13 @@ script:
       description: "Winetricks: Installing gdiplus"
       name: winetricks
   - task:
-      app: corefonts meiryo fontsmooth=rgb
+      app: corefonts meiryo fontsmooth=rgb 
       description: "Winetricks: Installing core fonts and configuring font smoothing"
       name: winetricks
   - copy:
       description: Installing HorizonXI Launcher
       dst: $GAMEDIR/$HOR_PATH
-      src: $horizon_launcher
+      src: horizon_launcher
   - task:
       app: d3dcompiler_43 d3dcompiler_47
       description: Installing d3dcompiler
@@ -49,6 +56,10 @@ script:
       description: Installing dgVoodoo2
       dst: $GAMEDIR/$POL_PATH
       src: $CACHE/dgVoodoo/MS/x86/D3D8.dll
+  - extract:
+      description: Extracting 4gb_patch
+      dst: $GAMEDIR/$HOR_PATH/4gb_patch
+      file: 4gb_patch
   - write_config:
       data:
         DirectX:
@@ -70,9 +81,5 @@ script:
     dxvk: false
     esync: false
     fsync: false
-    eac: false
-    battleeye: false
-    fsr: false
-    vkd3d: false
     overrides:
       d3d8: n,b

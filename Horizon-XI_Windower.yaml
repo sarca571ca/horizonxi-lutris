@@ -197,7 +197,7 @@ script:
   wine:
     dxvk: false
     esync: false
-    fsync: false
+    fsync: true
     eac: false
     battleeye: false
     fsr: false
