@@ -38,15 +38,6 @@ script:
         content: > 
           <?xml version="1.0" encoding="utf-8"?>
           <settings>
-            <autoload>
-              <addon>linuxfix</addon>
-              <addon>TParty</addon>
-              <addon>update</addon>
-              <addon>battlemod</addon>
-              <addon>FastCS</addon>
-              <plugin>Config</plugin>
-              <plugin>DelayMeNot</plugin>
-            </autoload>
             <profile name="Horizon-XI">
               <consolekey>Insert</consolekey>
               <uiscale>1</uiscale>
@@ -184,7 +175,7 @@ script:
         description: >
             Make any adjustments you like. If you don't know what you're doing then just close notepad.
           
-            File Location: $WIND_PATH/scripts/init.txt
+            File Location: ~/Games/horizon-xi/drive_c/Windower/scripts/init.txt
         executable: notepad.exe 
         args: $GAMEDIR/$WIND_PATH/scripts/init.txt
         name: wineexec 
