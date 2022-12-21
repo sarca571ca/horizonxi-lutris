@@ -12,13 +12,6 @@ need **WINE-STAGING-7.22!**
 
 #### Features
 - HorizonXI Launcher v1.1.0
-- DGVOODOO
-  - Auto configured for 4gb VRAM so if you have less than that you'll
-    need to adjust the setting in the Install script.
-    VRAM: 4096 - 4gb
-          3072 - 3gb
-          2048 - 2gb
-          1024 - 1gb
          
 #### Installation
 1. Download the Horizon-XI.yaml from the repo.
