@@ -1,24 +1,29 @@
 name: Horizon-XI
 game_slug: horizon-xi
-version: 1.1.0
+version: 1.2.1
 slug: horizon-xi
 runner: wine
-year: 2020
+year: 2023
 user: ex1L3
-description: Base Lutris script for downloading and installing HorizonXI Launcher.
+description: >
+  Base Lutris script for downloading and installing HorizonXI 
+  Launcher. Runner "lutris-GE-Proton7-42-x86_64" is required 
+  for this script to run. Install ProtonUp-Qt first and select
+  "lutris-GE-Proton7-42-x86_64" from the list to download and 
+  install.
 
 script:
   variables:
-    HOR_PATH: drive_c/Program Files (x86)/HorizonXI
-    POL_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/PlayOnlineViewer
-    FFXI_PATH: drive_c/Program Files (x86)/HorizonXI/Game/SquareEnix/FINAL FANTASY XI
+    HOR_PATH: drive_c/HorizonXI
+    POL_PATH: drive_c/HorizonXI/Game/SquareEnix/PlayOnlineViewer
+    FFXI_PATH: drive_c/HorizonXI/Game/SquareEnix/FINAL FANTASY XI
     APP_DATA: drive_c/users
   files:
-  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.1.0/HorizonXI-Launcher-1.1.0.Setup.exe
-  - 4gb_patch: https://drive.google.com/uc?export=download&id=1MKuPC6iI3s6vuoi1jEsgO2z7Kanf9OKE 
+  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.2.1/HorizonXI_Launcher-1.2.1-full.nupkg
+  - 4gb_patch: https://drive.google.com/uc?export=download&id=1MKuPC6iI3s6vuoi1jEsgO2z7Kanf9OKE
   game:
-    exe: $HOR_PATH/HorizonXI-Launcher-1.1.0.Setup.exe
-    arch: auto
+    exe: $HOR_PATH/launcher/lib/net45/HorizonXI-Launcher.exe
+    arch: win64
     prefix: $GAMEDIR
     launch_configs:
       - exe: $GAMEDIR/$HOR_PATH/4gb_patch/LargeAddressAwarePatcher.exe
@@ -27,22 +32,10 @@ script:
 
           Only install after HorizonXI is installed!
   installer:
-  - task:
-      app: dotnet48
-      description: "Winetricks: Installing dotnet48"
-      name: winetricks
-  - task:
-      app: gdiplus
-      description: "Winetricks: Installing gdiplus"
-      name: winetricks
-  - task:
-      app: corefonts meiryo fontsmooth=rgb 
-      description: "Winetricks: Installing core fonts and configuring font smoothing"
-      name: winetricks
-  - copy:
-      description: Installing HorizonXI Launcher
-      dst: $GAMEDIR/$HOR_PATH
-      src: horizon_launcher
+  - extract:
+      description: Extracting HorizonXI Launcher
+      dst: $GAMEDIR/$HOR_PATH/launcher
+      file: horizon_launcher
   - task:
       app: d3dcompiler_43 d3dcompiler_47
       description: Installing d3dcompiler
@@ -54,23 +47,28 @@ script:
   - write_config:
       data:
         DirectX:
-          VRAM: 4096
+          VRAM: 1024
           dgVoodooWatermark: false
       description: Configuring dgVoodoo2
-      file: $GAMEDIR/$POL_PATH/dgVoodoo.conf
+      file: $GAMEDIR/$HOR_PATH/Game/bootloader/dgVoodoo.conf
   - write_json:
-      file: $APP_DATA/$USER/AppData/Roaming/HorizonXI-Launcher/config.json
+      file: $APP_DATA/$USER/AppData/Roaming/HorizonXI-Launcher/storage.json
       data:
         paths:
           installPath:
-            description: 'Location of HorizonXI zip download.'
-            path: 'C:\Program Files (x86)\HorizonXI\Game'
+            description: 'Location of HorizonXI Game install.'
+            path: 'C:\HorizonXI\Game'
           downloadPath:
             description: 'Location of HorizonXI zip download.'
-            path: 'C:\Program Files (x86)\HorizonXI\Downloads'
+            path: 'C:\HorizonXI\Downloads'
   wine:
+    battleye: false
     dxvk: false
+    eac: false
     esync: false
+    fsr: false
     fsync: false
     overrides:
       d3d8: n,b
+    version: lutris-GE-Proton7-42-x86_64
+    vkd3d: false
