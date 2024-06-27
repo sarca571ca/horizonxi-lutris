@@ -70,5 +70,5 @@ script:
     fsync: false
     overrides:
       d3d8: n,b
-    version: lutris-GE-Proton7-42-x86_64
+    version: wine-ge-7-42-x86_64
     vkd3d: false
