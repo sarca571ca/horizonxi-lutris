@@ -1,15 +1,15 @@
 name: Horizon-XI
 game_slug: horizon-xi
-version: 1.2.1
+version: 1.3.0
 slug: horizon-xi
 runner: wine
-year: 2023
+year: 2024
 user: ex1L3
 description: >
-  Base Lutris script for downloading and installing HorizonXI 
-  Launcher. Runner "lutris-GE-Proton7-42-x86_64" is required 
+  Base Lutris script for downloading and installing HorizonXI
+  Launcher. Runner "lutris-GE-Proton7-42-x86_64" is required
   for this script to run. Install ProtonUp-Qt first and select
-  "lutris-GE-Proton7-42-x86_64" from the list to download and 
+  "lutris-GE-Proton7-42-x86_64" from the list to download and
   install.
 
 script:
@@ -19,7 +19,7 @@ script:
     FFXI_PATH: drive_c/HorizonXI/Game/SquareEnix/FINAL FANTASY XI
     APP_DATA: drive_c/users
   files:
-  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.2.1/HorizonXI_Launcher-1.2.1-full.nupkg
+  - horizon_launcher: https://github.com/HorizonFFXI/HorizonXI-Launcher-Binaries/releases/download/v1.3.0/HorizonXI_Launcher-1.3.0-full.nupkg
   - 4gb_patch: https://drive.google.com/uc?export=download&id=1MKuPC6iI3s6vuoi1jEsgO2z7Kanf9OKE
   game:
     exe: $HOR_PATH/launcher/lib/net45/HorizonXI-Launcher.exe
