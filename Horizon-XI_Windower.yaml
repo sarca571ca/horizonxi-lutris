@@ -19,9 +19,16 @@ script:
     - xipivot: https://github.com/Shirk/XIPivot/releases/download/v0.4.7/XIPivot_Windower_v0.4.7.zip
   game:
     exe: $WIND_PATH/Windower.exe
-    arch: auto
     prefix: $GAMEDIR
   installer:
+    - task:
+        app: dotnet48
+        description: 'Winetricks: Installing dotnet48'
+        name: winetricks
+    - task:
+        app: gdiplus
+        description: 'Winetricks: Installing gdiplus'
+        name: winetricks
     - copy:
         description: Installing Windower 4
         dst: $WIND_PATH
